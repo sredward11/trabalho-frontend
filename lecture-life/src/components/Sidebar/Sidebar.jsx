@@ -1,6 +1,10 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 function Sidebar() {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
   const navLinkClass = ({ isActive }) => {
     const base = 'flex items-center px-4 py-2 rounded-md transition-colors font-medium ';
 
@@ -8,6 +12,11 @@ function Sidebar() {
       ? base + 'bg-[#5c4033] text-white'
       : base + 'text-[#5c4033] hover:bg-[#d7ccc8] hover:text-[#3e2723]';
   };
+
+  function handleSair() {
+    logout();
+    navigate('/login');
+  }
 
   return (
     <aside className="flex flex-col gap-6 w-[240px] bg-white border-r border-[#d7ccc8] p-5 min-h-screen">
@@ -34,6 +43,15 @@ function Sidebar() {
           </li>
         </ul>
       </nav>
+
+      <div className="mt-auto pt-4 border-t border-[#d7ccc8]">
+        <button
+          onClick={handleSair}
+          className="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors font-medium rounded-md"
+        >
+          Sair
+        </button>
+      </div>
     </aside>
   );
 }
