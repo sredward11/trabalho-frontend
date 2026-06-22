@@ -1,7 +1,31 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Tabela from '../components/Tabela';
+import { listarLivros } from '../service/livroService';
 
 function Livros() {
+  const [livros, setLivros] = useState([]);
+  const [carregando, setCarregando] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    listarLivros()
+      .then((dados) => {
+        setLivros(Array.isArray(dados) ? dados : []);
+        setCarregando(false);
+      })
+      .catch(() => setCarregando(false));
+  }, []);
+
+  const headers = ['Título', 'Autor', 'Categoria', 'Páginas', 'Sinopse'];
+
+  const data = livros.map((livro) => ({
+    titulo: livro.titulo,
+    autor: livro.autor || '—',
+    categoria: livro.categoria || '—',
+    paginasTotal: livro.paginasTotal || '—',
+    sinopse: livro.sinopse || '—',
+  }));
 
   return (
     <section>
@@ -14,7 +38,12 @@ function Livros() {
           + Novo Livro
         </button>
       </div>
-      <p className="text-[#8d6e63]">Listagem em breve...</p>
+
+      {carregando && <p className="text-[#8d6e63]">Carregando livros...</p>}
+      {!carregando && livros.length === 0 && (
+        <p className="text-[#8d6e63]">Nenhum livro cadastrado ainda.</p>
+      )}
+      {!carregando && livros.length > 0 && <Tabela headers={headers} data={data} />}
     </section>
   );
 }

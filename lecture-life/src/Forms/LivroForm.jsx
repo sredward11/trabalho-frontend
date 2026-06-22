@@ -85,12 +85,20 @@ function LivroForm() {
           <label htmlFor="categoria" className="font-semibold text-[#5c4033]">
             Categoria
           </label>
-          <input
+          <select
             id="categoria"
-            type="text"
             {...register('categoria')}
-            className="border border-[#d7ccc8] p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8d6e63]"
-          />
+            className="border border-[#d7ccc8] p-3 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-[#8d6e63]"
+          >
+            <option value="">Selecione...</option>
+            <option value="Romance">Romance</option>
+            <option value="Tecnologia">Tecnologia</option>
+            <option value="Fantasia">Fantasia</option>
+            <option value="Ficção">Ficção</option>
+            <option value="Biografia">Biografia</option>
+            <option value="Acadêmico">Acadêmico</option>
+            <option value="Outros">Outros</option>
+          </select>
         </div>
 
         <div className="flex flex-col gap-1">
