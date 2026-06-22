@@ -1,0 +1,12 @@
+services:
+  app:
+    image: node:24
+    container_name: lecture-life
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    tty: true
+    stdin_open: true
