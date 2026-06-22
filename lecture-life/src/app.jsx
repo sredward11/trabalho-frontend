@@ -6,6 +6,7 @@ import Cadastro from './pages/Cadastro';
 import Dashboard from './pages/Dashboard';
 import Livros from './pages/Livros';
 import Leituras from './pages/Leituras';
+import LivroForm from './Forms/LivroForm';
 
 function App() {
   const { autenticado } = useAuth();
@@ -26,6 +27,7 @@ function App() {
       >
         <Route index element={<Dashboard />} />
         <Route path="livros" element={<Livros />} />
+        <Route path="livros/novo" element={<LivroForm />} />
         <Route path="leituras" element={<Leituras />} />
       </Route>
       <Route path="*" element={<Navigate to={autenticado ? '/' : '/login'} />} />
