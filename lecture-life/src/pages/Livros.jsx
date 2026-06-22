@@ -17,12 +17,13 @@ function Livros() {
       .catch(() => setCarregando(false));
   }, []);
 
-  const headers = ['Título', 'Autor', 'Categoria', 'Páginas', 'Sinopse'];
+  const headers = ['Título', 'Autor', 'Categoria', 'Ano', 'Páginas', 'Sinopse'];
 
   const data = livros.map((livro) => ({
     titulo: livro.titulo,
     autor: livro.autor || '—',
     categoria: livro.categoria || '—',
+    anoPublicacao: livro.anoPublicacao || '—',
     paginasTotal: livro.paginasTotal || '—',
     sinopse: livro.sinopse || '—',
   }));

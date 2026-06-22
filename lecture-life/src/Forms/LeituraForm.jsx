@@ -14,16 +14,27 @@ function LeituraForm() {
     handleSubmit,
     reset,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
   const statusSelecionado = watch('status');
+  const livroSelecionadoId = watch('bookId');
 
   useEffect(() => {
     listarLivros()
       .then((dados) => setLivros(Array.isArray(dados) ? dados : []))
       .catch(console.error);
   }, []);
+
+  useEffect(() => {
+    if (statusSelecionado === 'concluido' && livroSelecionadoId) {
+      const livro = livros.find((l) => (l._id || l.id) === livroSelecionadoId);
+      if (livro && livro.paginasTotal) {
+        setValue('paginasLidas', livro.paginasTotal);
+      }
+    }
+  }, [statusSelecionado, livroSelecionadoId, livros, setValue]);
 
   async function onSubmit(dados) {
     setErroGeral('');
@@ -115,38 +126,46 @@ function LeituraForm() {
           <>
             <div className="flex flex-col gap-1">
               <label htmlFor="dataInicio" className="font-semibold text-[#5c4033]">
-                Data de Início
+                Data de Início *
               </label>
               <input
                 id="dataInicio"
                 type="date"
-                {...register('dataInicio')}
+                {...register('dataInicio', { required: 'Informe a data de início.' })}
                 className="border border-[#d7ccc8] p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8d6e63]"
               />
+              {errors.dataInicio && <span className="text-red-500 text-sm">{errors.dataInicio.message}</span>}
             </div>
 
             <div className="flex flex-col gap-1">
               <label htmlFor="dataFim" className="font-semibold text-[#5c4033]">
-                Data de Conclusão
+                Data de Conclusão *
               </label>
               <input
                 id="dataFim"
                 type="date"
-                {...register('dataFim')}
+                {...register('dataFim', { required: 'Informe a data de conclusão.' })}
                 className="border border-[#d7ccc8] p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8d6e63]"
               />
+              {errors.dataFim && <span className="text-red-500 text-sm">{errors.dataFim.message}</span>}
             </div>
 
             <div className="flex flex-col gap-1">
               <label htmlFor="nota" className="font-semibold text-[#5c4033]">
-                Nota
+                Nota *
               </label>
               <input
                 id="nota"
                 type="number"
-                {...register('nota', { valueAsNumber: true, min: 0, max: 10 })}
+                {...register('nota', { 
+                  required: 'Informe uma nota.',
+                  valueAsNumber: true, 
+                  min: { value: 0, message: 'A nota deve ser no mínimo 0.' }, 
+                  max: { value: 10, message: 'A nota deve ser no máximo 10.' }
+                })}
                 className="border border-[#d7ccc8] p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8d6e63]"
               />
+              {errors.nota && <span className="text-red-500 text-sm">{errors.nota.message}</span>}
             </div>
           </>
         )}

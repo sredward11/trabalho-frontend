@@ -17,7 +17,7 @@ function Leituras() {
       .catch(() => setCarregando(false));
   }, []);
 
-  const headers = ['Livro', 'Status', 'Páginas Lidas', 'Favorito'];
+  const headers = ['Livro', 'Status', 'Páginas Lidas', 'Nota', 'Favorito'];
 
   const statusLabels = {
     planejando: 'Planejando',
@@ -30,6 +30,7 @@ function Leituras() {
     livro: leitura.book?.titulo || '—',
     status: statusLabels[leitura.status] || leitura.status,
     paginasLidas: leitura.paginasLidas ?? '—',
+    nota: leitura.nota ?? '—',
     favorito: leitura.favorito ? '⭐' : '—',
   }));
 

@@ -1,6 +1,6 @@
 function Tabela({ headers, data }) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-[#d7ccc8]">
+    <div className="overflow-x-auto rounded-lg border border-[#d7ccc8] max-w-5xl">
       <table className="w-full text-left bg-white">
         <thead className="bg-[#5c4033] text-white">
           <tr>
